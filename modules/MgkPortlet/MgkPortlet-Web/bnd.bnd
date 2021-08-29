@@ -1,0 +1,4 @@
+Bundle-Name: MgkPortlet-Web
+Bundle-SymbolicName: com.mgk.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.mgk.portlet.constants

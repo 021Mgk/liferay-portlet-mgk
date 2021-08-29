@@ -1,0 +1,10 @@
+Bundle-Name: MgkPortlet-api
+Bundle-SymbolicName: com.mgk.portlet.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.mgk.portlet.exception,\
+	com.mgk.portlet.model,\
+	com.mgk.portlet.service,\
+	com.mgk.portlet.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../MgkPortlet-service/service.xml
