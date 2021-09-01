@@ -5,10 +5,14 @@
 <%@taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
 <%@taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+<%@taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 
 <%@ page import="com.mgk.portlet.model.Person" %>
 <%@ page import="com.mgk.portlet.service.PersonLocalServiceUtil" %>
+<%@ page import="com.mgk.portlet.exception.PersonEmailException" %>
+
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 
@@ -21,7 +25,15 @@
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchEntry" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
 
+<%@page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %>
+
+
+
+
+<liferay-frontend:defineObjects/>
 
 <liferay-theme:defineObjects/>
 
 <portlet:defineObjects/>
+
+
