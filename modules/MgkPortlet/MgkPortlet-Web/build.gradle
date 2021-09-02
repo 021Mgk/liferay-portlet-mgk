@@ -5,6 +5,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.dynamic.section"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.form.navigator"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.util"
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.clay"
 	compileOnly group: "com.liferay", name: "com.liferay.journal.taglib"
 	compileOnly group: "com.liferay", name: "com.liferay.layout.taglib"
 	compileOnly group: "com.liferay", name: "com.liferay.site.taglib"
