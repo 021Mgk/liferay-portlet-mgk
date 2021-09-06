@@ -1,10 +1,12 @@
-<%@ page import="com.mgk.portlet.internal.display.context.PersonsManagementToolbarDisplayContext" %>
 <%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList" %>
 <%@ page import="com.mgk.portlet.internal.clay.PersonEntryVerticalCard" %>
 <%@include file="init.jsp" %>
 
 
 <%
+
+
+//    String keywords = ParamUtil.getString(request, "keywords");
 
 
 //    PersonsManagementToolbarDisplayContext personsManagementToolbarDisplayContext =
@@ -22,10 +24,91 @@
 
 %>
 
+<%--<h1><%=keywords %></h1>--%>
+
+<%--<%--%>
+<%--    SearchContext searchContext = SearchContextFactory.getInstance(request);--%>
+<%--    searchContext.setKeywords(keywords);--%>
+<%--    searchContext.setAttribute("paginationType", "more");--%>
+<%--    searchContext.setStart(0);--%>
+<%--    searchContext.setEnd(10);--%>
+<%--    Indexer<Person> indexer = IndexerRegistryUtil.getIndexer(Person.class);--%>
+<%--    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");--%>
+<%--        Hits hits = indexer.search(searchContext);--%>
+<%--        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> " +  hits.getDocs().length);--%>
+<%--        List<Person> personList = new ArrayList<Person>();--%>
+<%--        for (int i = 0; i < hits.getDocs().length; i++) {--%>
+<%--            Document doc = hits.doc(i);--%>
+<%--            System.out.println(doc.toString());--%>
+<%--            long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));--%>
+<%--            Person entry = null;--%>
+<%--            try {--%>
+<%--                entry = PersonLocalServiceUtil.getPerson(entryId);--%>
+<%--                System.out.println(entry.getName());--%>
+<%--            } catch (PortalException pe) {--%>
+<%--                _log.error(pe.getLocalizedMessage());--%>
+<%--            } catch (SystemException se) {--%>
+<%--                _log.error(se.getLocalizedMessage());--%>
+<%--            }--%>
+<%--            personList.add(entry);--%>
+<%--        }--%>
+
+<%--//--%>
+<%--//    List<Person> guestbooks = PersonLocalServiceUtil.getPersons(scopeGroupId);--%>
+<%--//    Map<String, String> guestbookMap = new HashMap<String, String>();--%>
+<%--//    for (Person person : entries) {--%>
+<%--//        guestbookMap.put(Long.toString(person.getPersonId()), person.getName());--%>
+<%--//    }--%>
+<%--%>--%>
+
+
+
+
+
+
+
+<%--<div style="background: red;">--%>
+
+<%--    <liferay-ui:search-container delta="10"--%>
+<%--                                 emptyResultsMessage="no-entries-were-found"--%>
+<%--                                 total="<%= personList.size() %>">--%>
+
+<%--        <liferay-ui:search-container-results results="<%= personList %>"/>--%>
+
+<%--        <liferay-ui:search-container-row--%>
+<%--                className="com.mgk.portlet.model.Person"--%>
+<%--                keyProperty="personId" modelVar="person" escapedModel="<%=true%>">--%>
+
+
+<%--            <liferay-ui:search-container-column-text property="name"/>--%>
+<%--            <liferay-ui:search-container-column-text property="family"/>--%>
+<%--            &lt;%&ndash;        <liferay-ui:search-container-column-status property="status" />&ndash;%&gt;--%>
+<%--            <liferay-ui:search-container-column-jsp align="right" path="/person_actions.jsp" />--%>
+
+
+
+<%--        </liferay-ui:search-container-row>--%>
+
+<%--        <liferay-ui:search-iterator />--%>
+
+<%--    </liferay-ui:search-container>--%>
+<%--</div>--%>
+
+
+<%--<hr />--%>
+<%--<hr />--%>
+
+<portlet:renderURL var="searchURL">
+    <portlet:param name="mvcRenderCommandName" value="/person/search"/>
+</portlet:renderURL>
+
+
 <clay:management-toolbar
         viewTypeItems="<%=viewTypeItems%>"
         searchContainerId="personEntries"
         supportsBulkActions="<%= true %>"
+        searchActionURL="<%=searchURL.toString() %>"
+        searchInputName="keywords"
 />
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
@@ -121,3 +204,6 @@
 
 
 
+<%--<%!--%>
+<%--    private static Log _log = LogFactoryUtil.getLog("html.view_search_jsp");--%>
+<%--%>--%>

@@ -64,6 +64,7 @@ public interface PersonLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PersonLocalServiceUtil} to access the person local service. Add custom service methods to <code>com.mgk.portlet.service.impl.PersonLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Person addPerson(
 			long pId, String name, String family, String email, String address,
 			String phoneNumber, String nationalCode, String description,
@@ -111,6 +112,7 @@ public interface PersonLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public Person deletePerson(long personId) throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
 	public Person deletePerson(long personId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
@@ -310,6 +312,7 @@ public interface PersonLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPersonsCount(long groupId);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Person updatePerson(
 			long pId, long personId, String name, String family, String email,
 			String address, String phoneNumber, String nationalCode,

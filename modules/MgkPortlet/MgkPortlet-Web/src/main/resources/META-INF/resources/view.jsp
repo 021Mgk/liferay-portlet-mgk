@@ -23,6 +23,27 @@
 <%--</div>--%>
 <%--<liferay-ui:error exception="<%= PersonEmailException.class %>" message="email email"/>--%>
 
+<portlet:renderURL var="searchURL">
+    <portlet:param name="mvcRenderCommandName" value="/person/search"/>
+</portlet:renderURL>
+
+
+<aui:form action="<%= searchURL.toString() %>" name="fm">
+
+    <div class="row">
+        <div class="col-md-8">
+            <aui:input inlineLabel="left" label="" name="keywords" placeholder="search-entries" size="256" />
+        </div>
+
+        <div class="col-md-4">
+            <aui:button type="submit" value="search" />
+        </div>
+    </div>
+
+</aui:form>
+
+
+
 <portlet:renderURL var="showPersonURL">
     <portlet:param name="mvcRenderCommandName" value="/person/list"></portlet:param>
 </portlet:renderURL>
@@ -65,9 +86,9 @@
     dialog: {
     destroyOnHide: true,
     // after: {
-    //     destroy: function (event) {
-    //          window.location.reload();
-    //     },
+    // destroy: function (event) {
+    // window.location.reload();
+    // },
     // },
     cssClass:'qqqqq'
     },

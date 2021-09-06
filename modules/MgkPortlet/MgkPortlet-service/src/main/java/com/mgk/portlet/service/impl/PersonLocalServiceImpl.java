@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.mgk.portlet.model.Person;
@@ -55,6 +57,7 @@ public class PersonLocalServiceImpl extends PersonLocalServiceBaseImpl {
 	 * Never reference this class directly. Use <code>com.mgk.portlet.service.PersonLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.mgk.portlet.service.PersonLocalServiceUtil</code>.
 	 */
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Person addPerson(long pId, String name, String family, String email,
 							String address, String phoneNumber, String nationalCode,
 							String description, String image, ServiceContext serviceContext) throws PortalException {
@@ -98,7 +101,7 @@ public class PersonLocalServiceImpl extends PersonLocalServiceBaseImpl {
 
 	}
 
-
+	@Indexable(type = IndexableType.REINDEX)
 	public Person updatePerson(long pId, long personId, String name, String family, String email,
 							   String address, String phoneNumber, String nationalCode,
 							   String description, String image, ServiceContext serviceContext) throws PortalException {
@@ -137,6 +140,7 @@ public class PersonLocalServiceImpl extends PersonLocalServiceBaseImpl {
 	}
 
 
+	@Indexable(type = IndexableType.DELETE)
 	public Person deletePerson(long personId,
 							   ServiceContext serviceContext) throws PortalException,
 			SystemException {

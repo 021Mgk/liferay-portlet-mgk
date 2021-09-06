@@ -39,7 +39,7 @@ public class PersonListRenderCommand implements MVCRenderCommand {
         }
 
 
-        return "/personList.jsp";
+        return "/person_list.jsp";
     }
 
     @Reference
