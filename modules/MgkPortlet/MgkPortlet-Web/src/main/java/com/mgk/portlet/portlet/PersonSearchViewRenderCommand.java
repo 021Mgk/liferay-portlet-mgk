@@ -40,32 +40,36 @@ public class PersonSearchViewRenderCommand implements MVCRenderCommand {
             String keywords = ParamUtil.getString(renderRequest, "keywords");
 
             System.out.println("keeeeeey " + keywords);
-
-            HttpServletRequest _request = PortalUtil.getHttpServletRequest(renderRequest);
-
-            SearchContext searchContext = SearchContextFactory.getInstance(_request);
-            searchContext.setKeywords(keywords);
-            searchContext.setAttribute("paginationType", "more");
-            searchContext.setStart(0);
-            searchContext.setEnd(10);
-            Indexer<Person> indexer = IndexerRegistryUtil.getIndexer(Person.class);
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            Hits hits = indexer.search(searchContext);
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> " +  hits.getDocs().length);
             List<Person> personList = new ArrayList<Person>();
-            for (int i = 0; i < hits.getDocs().length; i++) {
-                Document doc = hits.doc(i);
-                long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-                Person entry = null;
-                try {
-                    entry = PersonLocalServiceUtil.getPerson(entryId);
-                    System.out.println(entry.getName());
-                } catch (PortalException pe) {
-                    _log.error(pe.getLocalizedMessage());
-                } catch (SystemException se) {
-                    _log.error(se.getLocalizedMessage());
+
+            if (!keywords.equals("")) {
+                HttpServletRequest _request = PortalUtil.getHttpServletRequest(renderRequest);
+
+                SearchContext searchContext = SearchContextFactory.getInstance(_request);
+                searchContext.setKeywords(keywords);
+                searchContext.setAttribute("paginationType", "more");
+                searchContext.setStart(0);
+                searchContext.setEnd(10);
+                Indexer<Person> indexer = IndexerRegistryUtil.getIndexer(Person.class);
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                Hits hits = indexer.search(searchContext);
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + hits.getDocs().length);
+
+                for (int i = 0; i < hits.getDocs().length; i++) {
+                    Document doc = hits.doc(i);
+                    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+                    Person entry = null;
+                    try {
+                        entry = PersonLocalServiceUtil.getPerson(entryId);
+                        System.out.println(entry.getName());
+                    } catch (PortalException pe) {
+                        _log.error(pe.getLocalizedMessage());
+                    } catch (SystemException se) {
+                        _log.error(se.getLocalizedMessage());
+                    }
+                    personList.add(entry);
                 }
-                personList.add(entry);
+
             }
 
 
@@ -77,7 +81,6 @@ public class PersonSearchViewRenderCommand implements MVCRenderCommand {
 
         return "/view_search.jsp";
     }
-
 
 
     private static Log _log = LogFactoryUtil.getLog("html.view_search_jsp");

@@ -32,9 +32,7 @@ import java.util.Locale;
 public class ContactModelSummaryContributor implements ModelSummaryContributor {
 
 	@Override
-	public Summary getSummary(
-            Document document, Locale locale, String snippet) {
-
+	public Summary getSummary(Document document, Locale locale, String snippet) {
 		return null;
 	}
 

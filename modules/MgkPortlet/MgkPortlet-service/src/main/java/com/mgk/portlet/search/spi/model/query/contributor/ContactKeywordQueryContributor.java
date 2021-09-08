@@ -37,18 +37,13 @@ public class ContactKeywordQueryContributor implements KeywordQueryContributor {
 		String keywords, BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
-		SearchContext searchContext =
-			keywordQueryContributorHelper.getSearchContext();
+		SearchContext searchContext = keywordQueryContributorHelper.getSearchContext();
 
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "name", false);
-		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "family", false);
-		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "email", false);
-		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "address", false);
-		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "description", false);
+		queryHelper.addSearchTerm(booleanQuery, searchContext, "family", false);
+		queryHelper.addSearchTerm(booleanQuery, searchContext, "email", false);
+		queryHelper.addSearchTerm(booleanQuery, searchContext, "address", false);
+		queryHelper.addSearchTerm(booleanQuery, searchContext, "description", false);
 //		queryHelper.addSearchTerm(
 //			booleanQuery, searchContext, "lastName", false);
 //		queryHelper.addSearchTerm(

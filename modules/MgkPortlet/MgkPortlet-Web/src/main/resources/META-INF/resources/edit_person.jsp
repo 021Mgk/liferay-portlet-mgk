@@ -81,10 +81,16 @@
 
         <c:choose>
             <c:when test="<%= pID == 0 %>">
-                <aui:button type="submit" value="send" cssClass="mgk-btn"></aui:button>
+                <aui:button type="submit" value="Send" cssClass="mgk-btn"></aui:button>
             </c:when>
             <c:otherwise>
-                <aui:button type="submit" value="update" cssClass="mgk-btn-2"></aui:button>
+
+                <aui:button type="submit" value="Update" cssClass="mgk-btn-2"></aui:button>
+                <portlet:renderURL var="addPersonURL">
+                    <portlet:param name="mvcPath" value="/edit_person.jsp"></portlet:param>
+                </portlet:renderURL>
+
+                <aui:button  onClick="<%= addPersonURL.toString() %>" cssClass="btn-info" value="New"></aui:button>
             </c:otherwise>
         </c:choose>
 

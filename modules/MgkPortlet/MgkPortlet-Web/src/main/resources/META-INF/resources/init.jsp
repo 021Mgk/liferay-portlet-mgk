@@ -62,12 +62,8 @@
 <portlet:defineObjects/>
 
 <%
-    String displayStyle = ParamUtil.getString(
-            request, "displayStyle");
-
+    String displayStyle = ParamUtil.getString(request, "displayStyle");
     System.out.println("displayStyle = " + displayStyle);
-
-
 %>
 
 

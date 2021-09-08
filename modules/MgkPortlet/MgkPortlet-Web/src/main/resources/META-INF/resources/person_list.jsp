@@ -107,7 +107,7 @@
         viewTypeItems="<%=viewTypeItems%>"
         searchContainerId="personEntries"
         supportsBulkActions="<%= true %>"
-        searchActionURL="<%=searchURL.toString() %>"
+        searchActionURL="<%= searchURL.toString() %>"
         searchInputName="keywords"
 />
 
@@ -137,7 +137,8 @@
                 %>
 
                 <liferay-portlet:renderURL varImpl="rowURL">
-                    <portlet:param name="mvcRenderCommandName" value="/persons/edit" />
+                    <portlet:param name="mvcRenderCommandName" value="/person/view" />
+                    <portlet:param name="personId" value="<%= String.valueOf(person.getPersonId()) %>"/>
                 </liferay-portlet:renderURL>
 
                 <liferay-ui:search-container-column-text>
@@ -166,7 +167,9 @@
     <liferay-ui:search-iterator
             displayStyle="<%= displayStyle %>"
             markupView="lexicon"
+
     />
+
 
 </liferay-ui:search-container>
 

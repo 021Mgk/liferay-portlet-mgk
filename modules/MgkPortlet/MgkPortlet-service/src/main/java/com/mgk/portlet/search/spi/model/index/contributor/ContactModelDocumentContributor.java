@@ -14,16 +14,13 @@
 
 package com.mgk.portlet.search.spi.model.index.contributor;
 
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.User;
+
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.mgk.portlet.model.Person;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
 
 /**
  * @author Lucas Marques de Paula

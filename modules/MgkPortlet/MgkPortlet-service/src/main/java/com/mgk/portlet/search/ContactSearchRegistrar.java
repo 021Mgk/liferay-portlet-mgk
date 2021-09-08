@@ -41,13 +41,10 @@ public class ContactSearchRegistrar {
                 new ModelSearchDefinitionContributor() {
 
                     @Override
-                    public void contribute(
-                            ModelSearchDefinition modelSearchDefinition) {
+                    public void contribute(ModelSearchDefinition modelSearchDefinition) {
+                        modelSearchDefinition.setModelIndexWriteContributor(modelIndexWriterContributor);
+                        modelSearchDefinition.setModelSummaryContributor(modelSummaryContributor);
 
-                        modelSearchDefinition.setModelIndexWriteContributor(
-                                modelIndexWriterContributor);
-                        modelSearchDefinition.setModelSummaryContributor(
-                                modelSummaryContributor);
                     }
 
                 });
