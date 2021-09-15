@@ -129,7 +129,6 @@
 			searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
     <liferay-ui:search-container-row className="com.mgk.portlet.model.Person" modelVar="person">
-
         <c:choose>
             <c:when test="<%=displayStyle.equals("icon")%>">
                 <%
