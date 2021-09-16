@@ -10,6 +10,11 @@ buildscript {
 	}
 }
 
+
+buildREST {
+	copyrightFile = "./copy-right.txt"
+}
+
 apply plugin: "com.liferay.portal.tools.rest.builder"
 
 
