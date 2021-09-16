@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.0.21"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.0.111"
 	}
 
 	repositories {
@@ -8,6 +8,11 @@ buildscript {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
 	}
+}
+
+
+buildREST {
+	copyrightFile = "./copy-right.txt"
 }
 
 apply plugin: "com.liferay.portal.tools.rest.builder"
@@ -20,7 +25,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.odata.api"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "7.13.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api"
 	compileOnly group: "com.liferay", name: "javax.xml.bind"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
@@ -34,7 +39,10 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 	compileOnly group: "org.osgi", name: "org.osgi.core"
 
-	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.167"
+	compileOnly project(":modules:MgkPortlet:MgkPortlet-api")
+
+
+	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.111"
 }
 
 group = "mgkportlet.rest"

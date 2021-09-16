@@ -10,10 +10,9 @@ info:
 openapi: 3.0.1
 components:
     schemas:
-        Person:
-            # @review
+        MGKPerson:
             description:
-                A person that is a member of the portal.
+                A MGKPerson that is a member of the portal.
             properties:
                 email:
                     format: email
@@ -28,13 +27,19 @@ components:
                     type: string
             type: object
 paths:
-    "/persons":
+    "/sites/{siteId}/persons":
         get:
             # @review
             description:
                 Retrieves the persons. Results can be paginated.
             operationId: getPersonsPage
             parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
                 - in: query
                   name: page
                   schema:
@@ -53,16 +58,16 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Person"
+                                    $ref: "#/components/schemas/MGKPerson"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Person"
+                                    $ref: "#/components/schemas/MGKPerson"
                                 type: array
                     description:
                         ""
-            tags: ["Person"]
+            tags: ["MGKPerson"]
         post:
             description:
                 Creates a new person
@@ -71,24 +76,23 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Person"
+                            $ref: "#/components/schemas/MGKPerson"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/Person"
+                            $ref: "#/components/schemas/MGKPerson"
             responses:
                 201:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Person"
+                                $ref: "#/components/schemas/MGKPerson"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/Person"
+                                $ref: "#/components/schemas/MGKPerson"
                     # @review
                     description:
                         "Person successfully added"
-            tags: ["Person"]
-
+            tags: ["MGKPerson"]
         put:
             description: Update person
             operationId: updatePerson
@@ -96,25 +100,25 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Person"
+                            $ref: "#/components/schemas/MGKPerson"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/Person"
+                            $ref: "#/components/schemas/MGKPerson"
             responses:
                 201:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Person"
+                                $ref: "#/components/schemas/MGKPerson"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/Person"
+                                $ref: "#/components/schemas/MGKPerson"
                     # @review
                     description:
-                        "Person successfully added"
-            tags: ["Person"]
+                        "MGKPerson successfully added"
+            tags: ["MGKPerson"]
         delete:
-            description: Delete person
+            description: Delete MGKPerson
             parameters:
                 - in: query
                   name: personId
@@ -125,4 +129,4 @@ paths:
                 "400":
                     description: "Invalid ID supplied"
                 "404":
-                    description: "Person not found"
+                    description: "MGKPerson not found"

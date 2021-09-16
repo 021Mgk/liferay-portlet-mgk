@@ -48,12 +48,12 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import mgkportlet.rest.client.dto.v1_0.Person;
+import mgkportlet.rest.client.dto.v1_0.MGKPerson;
 import mgkportlet.rest.client.http.HttpInvoker;
 import mgkportlet.rest.client.pagination.Page;
 import mgkportlet.rest.client.pagination.Pagination;
-import mgkportlet.rest.client.resource.v1_0.PersonResource;
-import mgkportlet.rest.client.serdes.v1_0.PersonSerDes;
+import mgkportlet.rest.client.resource.v1_0.MGKPersonResource;
+import mgkportlet.rest.client.serdes.v1_0.MGKPersonSerDes;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 
@@ -70,7 +70,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BasePersonResourceTestCase {
+public abstract class BaseMGKPersonResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -91,13 +91,11 @@ public abstract class BasePersonResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_personResource.setContextCompany(testCompany);
+		_mgkPersonResource.setContextCompany(testCompany);
 
-		PersonResource.Builder builder = PersonResource.builder();
+		MGKPersonResource.Builder builder = MGKPersonResource.builder();
 
-		personResource = builder.authentication(
-			"test@liferay.com", "test"
-		).locale(
+		mgkPersonResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -126,13 +124,13 @@ public abstract class BasePersonResourceTestCase {
 			}
 		};
 
-		Person person1 = randomPerson();
+		MGKPerson mgkPerson1 = randomMGKPerson();
 
-		String json = objectMapper.writeValueAsString(person1);
+		String json = objectMapper.writeValueAsString(mgkPerson1);
 
-		Person person2 = PersonSerDes.toDTO(json);
+		MGKPerson mgkPerson2 = MGKPersonSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(person1, person2));
+		Assert.assertTrue(equals(mgkPerson1, mgkPerson2));
 	}
 
 	@Test
@@ -152,10 +150,10 @@ public abstract class BasePersonResourceTestCase {
 			}
 		};
 
-		Person person = randomPerson();
+		MGKPerson mgkPerson = randomMGKPerson();
 
-		String json1 = objectMapper.writeValueAsString(person);
-		String json2 = PersonSerDes.toJSON(person);
+		String json1 = objectMapper.writeValueAsString(mgkPerson);
+		String json2 = MGKPersonSerDes.toJSON(mgkPerson);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -165,76 +163,129 @@ public abstract class BasePersonResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Person person = randomPerson();
+		MGKPerson mgkPerson = randomMGKPerson();
 
-		person.setEmail(regex);
-		person.setFirstName(regex);
-		person.setLastName(regex);
+		mgkPerson.setEmail(regex);
+		mgkPerson.setFirstName(regex);
+		mgkPerson.setLastName(regex);
 
-		String json = PersonSerDes.toJSON(person);
+		String json = MGKPersonSerDes.toJSON(mgkPerson);
 
 		Assert.assertFalse(json.contains(regex));
 
-		person = PersonSerDes.toDTO(json);
+		mgkPerson = MGKPersonSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, person.getEmail());
-		Assert.assertEquals(regex, person.getFirstName());
-		Assert.assertEquals(regex, person.getLastName());
+		Assert.assertEquals(regex, mgkPerson.getEmail());
+		Assert.assertEquals(regex, mgkPerson.getFirstName());
+		Assert.assertEquals(regex, mgkPerson.getLastName());
 	}
 
 	@Test
 	public void testGetPersonsPage() throws Exception {
-		Page<Person> page = personResource.getPersonsPage(
-			null, Pagination.of(1, 2));
+		Page<MGKPerson> page = mgkPersonResource.getPersonsPage(
+			testGetPersonsPage_getSiteId(), null, Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Person person1 = testGetPersonsPage_addPerson(randomPerson());
+		Long siteId = testGetPersonsPage_getSiteId();
+		Long irrelevantSiteId = testGetPersonsPage_getIrrelevantSiteId();
 
-		Person person2 = testGetPersonsPage_addPerson(randomPerson());
+		if ((irrelevantSiteId != null)) {
+			MGKPerson irrelevantMGKPerson = testGetPersonsPage_addMGKPerson(
+				irrelevantSiteId, randomIrrelevantMGKPerson());
 
-		page = personResource.getPersonsPage(null, Pagination.of(1, 2));
+			page = mgkPersonResource.getPersonsPage(
+				irrelevantSiteId, null, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantMGKPerson),
+				(List<MGKPerson>)page.getItems());
+			assertValid(page);
+		}
+
+		MGKPerson mgkPerson1 = testGetPersonsPage_addMGKPerson(
+			siteId, randomMGKPerson());
+
+		MGKPerson mgkPerson2 = testGetPersonsPage_addMGKPerson(
+			siteId, randomMGKPerson());
+
+		page = mgkPersonResource.getPersonsPage(
+			siteId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(person1, person2), (List<Person>)page.getItems());
+			Arrays.asList(mgkPerson1, mgkPerson2),
+			(List<MGKPerson>)page.getItems());
 		assertValid(page);
 	}
 
 	@Test
 	public void testGetPersonsPageWithPagination() throws Exception {
-		Person person1 = testGetPersonsPage_addPerson(randomPerson());
+		Long siteId = testGetPersonsPage_getSiteId();
 
-		Person person2 = testGetPersonsPage_addPerson(randomPerson());
+		MGKPerson mgkPerson1 = testGetPersonsPage_addMGKPerson(
+			siteId, randomMGKPerson());
 
-		Person person3 = testGetPersonsPage_addPerson(randomPerson());
+		MGKPerson mgkPerson2 = testGetPersonsPage_addMGKPerson(
+			siteId, randomMGKPerson());
 
-		Page<Person> page1 = personResource.getPersonsPage(
-			null, Pagination.of(1, 2));
+		MGKPerson mgkPerson3 = testGetPersonsPage_addMGKPerson(
+			siteId, randomMGKPerson());
 
-		List<Person> persons1 = (List<Person>)page1.getItems();
+		Page<MGKPerson> page1 = mgkPersonResource.getPersonsPage(
+			siteId, null, Pagination.of(1, 2));
 
-		Assert.assertEquals(persons1.toString(), 2, persons1.size());
+		List<MGKPerson> mgkPersons1 = (List<MGKPerson>)page1.getItems();
 
-		Page<Person> page2 = personResource.getPersonsPage(
-			null, Pagination.of(2, 2));
+		Assert.assertEquals(mgkPersons1.toString(), 2, mgkPersons1.size());
+
+		Page<MGKPerson> page2 = mgkPersonResource.getPersonsPage(
+			siteId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
-		List<Person> persons2 = (List<Person>)page2.getItems();
+		List<MGKPerson> mgkPersons2 = (List<MGKPerson>)page2.getItems();
 
-		Assert.assertEquals(persons2.toString(), 1, persons2.size());
+		Assert.assertEquals(mgkPersons2.toString(), 1, mgkPersons2.size());
 
-		Page<Person> page3 = personResource.getPersonsPage(
-			null, Pagination.of(1, 3));
+		Page<MGKPerson> page3 = mgkPersonResource.getPersonsPage(
+			siteId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(person1, person2, person3),
-			(List<Person>)page3.getItems());
+			Arrays.asList(mgkPerson1, mgkPerson2, mgkPerson3),
+			(List<MGKPerson>)page3.getItems());
 	}
 
-	protected Person testGetPersonsPage_addPerson(Person person)
+	protected MGKPerson testGetPersonsPage_addMGKPerson(
+			Long siteId, MGKPerson mgkPerson)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetPersonsPage_getSiteId() throws Exception {
+		return testGroup.getGroupId();
+	}
+
+	protected Long testGetPersonsPage_getIrrelevantSiteId() throws Exception {
+		return irrelevantGroup.getGroupId();
+	}
+
+	@Test
+	public void testAddPerson() throws Exception {
+		MGKPerson randomMGKPerson = randomMGKPerson();
+
+		MGKPerson postMGKPerson = testAddPerson_addMGKPerson(randomMGKPerson);
+
+		assertEquals(randomMGKPerson, postMGKPerson);
+		assertValid(postMGKPerson);
+	}
+
+	protected MGKPerson testAddPerson_addMGKPerson(MGKPerson mgkPerson)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -242,77 +293,29 @@ public abstract class BasePersonResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPersonsPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"persons",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 2);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		JSONObject personsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/persons");
-
-		Assert.assertEquals(0, personsJSONObject.get("totalCount"));
-
-		Person person1 = testGraphQLPerson_addPerson();
-		Person person2 = testGraphQLPerson_addPerson();
-
-		personsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/persons");
-
-		Assert.assertEquals(2, personsJSONObject.get("totalCount"));
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(person1, person2),
-			Arrays.asList(
-				PersonSerDes.toDTOs(personsJSONObject.getString("items"))));
-	}
-
-	@Test
-	public void testAddPerson() throws Exception {
-		Person randomPerson = randomPerson();
-
-		Person postPerson = testAddPerson_addPerson(randomPerson);
-
-		assertEquals(randomPerson, postPerson);
-		assertValid(postPerson);
-	}
-
-	protected Person testAddPerson_addPerson(Person person) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testUpdatePerson() throws Exception {
-		Person postPerson = testUpdatePerson_addPerson();
+		MGKPerson postMGKPerson = testUpdatePerson_addMGKPerson();
 
-		Person randomPerson = randomPerson();
+		MGKPerson randomMGKPerson = randomMGKPerson();
 
-		Person putPerson = personResource.updatePerson(randomPerson);
+		MGKPerson putMGKPerson = mgkPersonResource.updatePerson(
+			randomMGKPerson);
 
-		assertEquals(randomPerson, putPerson);
-		assertValid(putPerson);
+		assertEquals(randomMGKPerson, putMGKPerson);
+		assertValid(putMGKPerson);
 
-		Person getPerson = personResource.updatePerson();
+		MGKPerson getMGKPerson = mgkPersonResource.updatePerson();
 
-		assertEquals(randomPerson, getPerson);
-		assertValid(getPerson);
+		assertEquals(randomMGKPerson, getMGKPerson);
+		assertValid(getMGKPerson);
 	}
 
-	protected Person testUpdatePerson_addPerson() throws Exception {
+	protected MGKPerson testUpdatePerson_addMGKPerson() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Person testGraphQLPerson_addPerson() throws Exception {
+	protected MGKPerson testGraphQLMGKPerson_addMGKPerson() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -325,32 +328,35 @@ public abstract class BasePersonResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Person person1, Person person2) {
+	protected void assertEquals(MGKPerson mgkPerson1, MGKPerson mgkPerson2) {
 		Assert.assertTrue(
-			person1 + " does not equal " + person2, equals(person1, person2));
+			mgkPerson1 + " does not equal " + mgkPerson2,
+			equals(mgkPerson1, mgkPerson2));
 	}
 
-	protected void assertEquals(List<Person> persons1, List<Person> persons2) {
-		Assert.assertEquals(persons1.size(), persons2.size());
+	protected void assertEquals(
+		List<MGKPerson> mgkPersons1, List<MGKPerson> mgkPersons2) {
 
-		for (int i = 0; i < persons1.size(); i++) {
-			Person person1 = persons1.get(i);
-			Person person2 = persons2.get(i);
+		Assert.assertEquals(mgkPersons1.size(), mgkPersons2.size());
 
-			assertEquals(person1, person2);
+		for (int i = 0; i < mgkPersons1.size(); i++) {
+			MGKPerson mgkPerson1 = mgkPersons1.get(i);
+			MGKPerson mgkPerson2 = mgkPersons2.get(i);
+
+			assertEquals(mgkPerson1, mgkPerson2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Person> persons1, List<Person> persons2) {
+		List<MGKPerson> mgkPersons1, List<MGKPerson> mgkPersons2) {
 
-		Assert.assertEquals(persons1.size(), persons2.size());
+		Assert.assertEquals(mgkPersons1.size(), mgkPersons2.size());
 
-		for (Person person1 : persons1) {
+		for (MGKPerson mgkPerson1 : mgkPersons1) {
 			boolean contains = false;
 
-			for (Person person2 : persons2) {
-				if (equals(person1, person2)) {
+			for (MGKPerson mgkPerson2 : mgkPersons2) {
+				if (equals(mgkPerson1, mgkPerson2)) {
 					contains = true;
 
 					break;
@@ -358,14 +364,14 @@ public abstract class BasePersonResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				persons2 + " does not contain " + person1, contains);
+				mgkPersons2 + " does not contain " + mgkPerson1, contains);
 		}
 	}
 
-	protected void assertValid(Person person) throws Exception {
+	protected void assertValid(MGKPerson mgkPerson) {
 		boolean valid = true;
 
-		if (person.getId() == null) {
+		if (mgkPerson.getId() == null) {
 			valid = false;
 		}
 
@@ -373,7 +379,7 @@ public abstract class BasePersonResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("email", additionalAssertFieldName)) {
-				if (person.getEmail() == null) {
+				if (mgkPerson.getEmail() == null) {
 					valid = false;
 				}
 
@@ -381,7 +387,7 @@ public abstract class BasePersonResourceTestCase {
 			}
 
 			if (Objects.equals("firstName", additionalAssertFieldName)) {
-				if (person.getFirstName() == null) {
+				if (mgkPerson.getFirstName() == null) {
 					valid = false;
 				}
 
@@ -389,7 +395,7 @@ public abstract class BasePersonResourceTestCase {
 			}
 
 			if (Objects.equals("lastName", additionalAssertFieldName)) {
-				if (person.getLastName() == null) {
+				if (mgkPerson.getLastName() == null) {
 					valid = false;
 				}
 
@@ -404,12 +410,12 @@ public abstract class BasePersonResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Person> page) {
+	protected void assertValid(Page<MGKPerson> page) {
 		boolean valid = false;
 
-		java.util.Collection<Person> persons = page.getItems();
+		java.util.Collection<MGKPerson> mgkPersons = page.getItems();
 
-		int size = persons.size();
+		int size = mgkPersons.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -430,7 +436,7 @@ public abstract class BasePersonResourceTestCase {
 
 		for (Field field :
 				ReflectionUtil.getDeclaredFields(
-					mgkportlet.rest.dto.v1_0.Person.class)) {
+					mgkportlet.rest.dto.v1_0.MGKPerson.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -477,8 +483,8 @@ public abstract class BasePersonResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Person person1, Person person2) {
-		if (person1 == person2) {
+	protected boolean equals(MGKPerson mgkPerson1, MGKPerson mgkPerson2) {
+		if (mgkPerson1 == mgkPerson2) {
 			return true;
 		}
 
@@ -487,7 +493,7 @@ public abstract class BasePersonResourceTestCase {
 
 			if (Objects.equals("email", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						person1.getEmail(), person2.getEmail())) {
+						mgkPerson1.getEmail(), mgkPerson2.getEmail())) {
 
 					return false;
 				}
@@ -497,7 +503,7 @@ public abstract class BasePersonResourceTestCase {
 
 			if (Objects.equals("firstName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						person1.getFirstName(), person2.getFirstName())) {
+						mgkPerson1.getFirstName(), mgkPerson2.getFirstName())) {
 
 					return false;
 				}
@@ -506,7 +512,9 @@ public abstract class BasePersonResourceTestCase {
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(person1.getId(), person2.getId())) {
+				if (!Objects.deepEquals(
+						mgkPerson1.getId(), mgkPerson2.getId())) {
+
 					return false;
 				}
 
@@ -515,7 +523,7 @@ public abstract class BasePersonResourceTestCase {
 
 			if (Objects.equals("lastName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						person1.getLastName(), person2.getLastName())) {
+						mgkPerson1.getLastName(), mgkPerson2.getLastName())) {
 
 					return false;
 				}
@@ -550,23 +558,21 @@ public abstract class BasePersonResourceTestCase {
 					return false;
 				}
 			}
-
-			return true;
 		}
 
-		return false;
+		return true;
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_personResource instanceof EntityModelResource)) {
+		if (!(_mgkPersonResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_personResource;
+			(EntityModelResource)_mgkPersonResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -595,7 +601,7 @@ public abstract class BasePersonResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Person person) {
+		EntityField entityField, String operator, MGKPerson mgkPerson) {
 
 		StringBundler sb = new StringBundler();
 
@@ -609,7 +615,7 @@ public abstract class BasePersonResourceTestCase {
 
 		if (entityFieldName.equals("email")) {
 			sb.append("'");
-			sb.append(String.valueOf(person.getEmail()));
+			sb.append(String.valueOf(mgkPerson.getEmail()));
 			sb.append("'");
 
 			return sb.toString();
@@ -617,7 +623,7 @@ public abstract class BasePersonResourceTestCase {
 
 		if (entityFieldName.equals("firstName")) {
 			sb.append("'");
-			sb.append(String.valueOf(person.getFirstName()));
+			sb.append(String.valueOf(mgkPerson.getFirstName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -630,7 +636,7 @@ public abstract class BasePersonResourceTestCase {
 
 		if (entityFieldName.equals("lastName")) {
 			sb.append("'");
-			sb.append(String.valueOf(person.getLastName()));
+			sb.append(String.valueOf(mgkPerson.getLastName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -677,8 +683,8 @@ public abstract class BasePersonResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected Person randomPerson() throws Exception {
-		return new Person() {
+	protected MGKPerson randomMGKPerson() throws Exception {
+		return new MGKPerson() {
 			{
 				email =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
@@ -692,17 +698,17 @@ public abstract class BasePersonResourceTestCase {
 		};
 	}
 
-	protected Person randomIrrelevantPerson() throws Exception {
-		Person randomIrrelevantPerson = randomPerson();
+	protected MGKPerson randomIrrelevantMGKPerson() throws Exception {
+		MGKPerson randomIrrelevantMGKPerson = randomMGKPerson();
 
-		return randomIrrelevantPerson;
+		return randomIrrelevantMGKPerson;
 	}
 
-	protected Person randomPatchPerson() throws Exception {
-		return randomPerson();
+	protected MGKPerson randomPatchMGKPerson() throws Exception {
+		return randomMGKPerson();
 	}
 
-	protected PersonResource personResource;
+	protected MGKPersonResource mgkPersonResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -746,12 +752,12 @@ public abstract class BasePersonResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(": ");
+					sb.append(":");
 					sb.append(entry.getValue());
-					sb.append(", ");
+					sb.append(",");
 				}
 
-				sb.setLength(sb.length() - 2);
+				sb.setLength(sb.length() - 1);
 
 				sb.append(")");
 			}
@@ -761,10 +767,10 @@ public abstract class BasePersonResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(", ");
+					sb.append(",");
 				}
 
-				sb.setLength(sb.length() - 2);
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}
@@ -779,7 +785,7 @@ public abstract class BasePersonResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BasePersonResourceTestCase.class);
+		BaseMGKPersonResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -796,6 +802,6 @@ public abstract class BasePersonResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private mgkportlet.rest.resource.v1_0.PersonResource _personResource;
+	private mgkportlet.rest.resource.v1_0.MGKPersonResource _mgkPersonResource;
 
 }

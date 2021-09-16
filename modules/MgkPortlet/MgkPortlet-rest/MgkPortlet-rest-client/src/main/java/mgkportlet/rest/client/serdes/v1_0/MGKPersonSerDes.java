@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 import javax.annotation.Generated;
 
-import mgkportlet.rest.client.dto.v1_0.Person;
+import mgkportlet.rest.client.dto.v1_0.MGKPerson;
 import mgkportlet.rest.client.json.BaseJSONParser;
 
 /**
@@ -16,22 +16,22 @@ import mgkportlet.rest.client.json.BaseJSONParser;
  * @generated
  */
 @Generated("")
-public class PersonSerDes {
+public class MGKPersonSerDes {
 
-	public static Person toDTO(String json) {
-		PersonJSONParser personJSONParser = new PersonJSONParser();
+	public static MGKPerson toDTO(String json) {
+		MGKPersonJSONParser mgkPersonJSONParser = new MGKPersonJSONParser();
 
-		return personJSONParser.parseToDTO(json);
+		return mgkPersonJSONParser.parseToDTO(json);
 	}
 
-	public static Person[] toDTOs(String json) {
-		PersonJSONParser personJSONParser = new PersonJSONParser();
+	public static MGKPerson[] toDTOs(String json) {
+		MGKPersonJSONParser mgkPersonJSONParser = new MGKPersonJSONParser();
 
-		return personJSONParser.parseToDTOs(json);
+		return mgkPersonJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Person person) {
-		if (person == null) {
+	public static String toJSON(MGKPerson mgkPerson) {
+		if (mgkPerson == null) {
 			return "null";
 		}
 
@@ -39,7 +39,7 @@ public class PersonSerDes {
 
 		sb.append("{");
 
-		if (person.getEmail() != null) {
+		if (mgkPerson.getEmail() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -48,12 +48,12 @@ public class PersonSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(person.getEmail()));
+			sb.append(_escape(mgkPerson.getEmail()));
 
 			sb.append("\"");
 		}
 
-		if (person.getFirstName() != null) {
+		if (mgkPerson.getFirstName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -62,22 +62,22 @@ public class PersonSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(person.getFirstName()));
+			sb.append(_escape(mgkPerson.getFirstName()));
 
 			sb.append("\"");
 		}
 
-		if (person.getId() != null) {
+		if (mgkPerson.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(person.getId());
+			sb.append(mgkPerson.getId());
 		}
 
-		if (person.getLastName() != null) {
+		if (mgkPerson.getLastName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -86,7 +86,7 @@ public class PersonSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(person.getLastName()));
+			sb.append(_escape(mgkPerson.getLastName()));
 
 			sb.append("\"");
 		}
@@ -97,85 +97,89 @@ public class PersonSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PersonJSONParser personJSONParser = new PersonJSONParser();
+		MGKPersonJSONParser mgkPersonJSONParser = new MGKPersonJSONParser();
 
-		return personJSONParser.parseToMap(json);
+		return mgkPersonJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Person person) {
-		if (person == null) {
+	public static Map<String, String> toMap(MGKPerson mgkPerson) {
+		if (mgkPerson == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (person.getEmail() == null) {
+		if (mgkPerson.getEmail() == null) {
 			map.put("email", null);
 		}
 		else {
-			map.put("email", String.valueOf(person.getEmail()));
+			map.put("email", String.valueOf(mgkPerson.getEmail()));
 		}
 
-		if (person.getFirstName() == null) {
+		if (mgkPerson.getFirstName() == null) {
 			map.put("firstName", null);
 		}
 		else {
-			map.put("firstName", String.valueOf(person.getFirstName()));
+			map.put("firstName", String.valueOf(mgkPerson.getFirstName()));
 		}
 
-		if (person.getId() == null) {
+		if (mgkPerson.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(person.getId()));
+			map.put("id", String.valueOf(mgkPerson.getId()));
 		}
 
-		if (person.getLastName() == null) {
+		if (mgkPerson.getLastName() == null) {
 			map.put("lastName", null);
 		}
 		else {
-			map.put("lastName", String.valueOf(person.getLastName()));
+			map.put("lastName", String.valueOf(mgkPerson.getLastName()));
 		}
 
 		return map;
 	}
 
-	public static class PersonJSONParser extends BaseJSONParser<Person> {
+	public static class MGKPersonJSONParser extends BaseJSONParser<MGKPerson> {
 
 		@Override
-		protected Person createDTO() {
-			return new Person();
+		protected MGKPerson createDTO() {
+			return new MGKPerson();
 		}
 
 		@Override
-		protected Person[] createDTOArray(int size) {
-			return new Person[size];
+		protected MGKPerson[] createDTOArray(int size) {
+			return new MGKPerson[size];
 		}
 
 		@Override
 		protected void setField(
-			Person person, String jsonParserFieldName,
+			MGKPerson mgkPerson, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "email")) {
 				if (jsonParserFieldValue != null) {
-					person.setEmail((String)jsonParserFieldValue);
+					mgkPerson.setEmail((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "firstName")) {
 				if (jsonParserFieldValue != null) {
-					person.setFirstName((String)jsonParserFieldValue);
+					mgkPerson.setFirstName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					person.setId(Long.valueOf((String)jsonParserFieldValue));
+					mgkPerson.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "lastName")) {
 				if (jsonParserFieldValue != null) {
-					person.setLastName((String)jsonParserFieldValue);
+					mgkPerson.setLastName((String)jsonParserFieldValue);
 				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
 			}
 		}
 
@@ -205,7 +209,7 @@ public class PersonSerDes {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\": ");
+			sb.append("\":");
 
 			Object value = entry.getValue();
 
@@ -241,7 +245,7 @@ public class PersonSerDes {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(", ");
+				sb.append(",");
 			}
 		}
 

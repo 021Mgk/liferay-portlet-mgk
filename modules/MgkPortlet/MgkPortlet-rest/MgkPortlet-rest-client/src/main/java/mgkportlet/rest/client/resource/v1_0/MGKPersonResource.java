@@ -8,39 +8,41 @@ import java.util.logging.Logger;
 
 import javax.annotation.Generated;
 
-import mgkportlet.rest.client.dto.v1_0.Person;
+import mgkportlet.rest.client.dto.v1_0.MGKPerson;
 import mgkportlet.rest.client.http.HttpInvoker;
 import mgkportlet.rest.client.pagination.Page;
 import mgkportlet.rest.client.pagination.Pagination;
 import mgkportlet.rest.client.problem.Problem;
-import mgkportlet.rest.client.serdes.v1_0.PersonSerDes;
+import mgkportlet.rest.client.serdes.v1_0.MGKPersonSerDes;
 
 /**
  * @author USER
  * @generated
  */
 @Generated("")
-public interface PersonResource {
+public interface MGKPersonResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<Person> getPersonsPage(Integer personId, Pagination pagination)
+	public Page<MGKPerson> getPersonsPage(
+			Long siteId, Integer personId, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getPersonsPageHttpResponse(
-			Integer personId, Pagination pagination)
+			Long siteId, Integer personId, Pagination pagination)
 		throws Exception;
 
-	public Person addPerson(Person person) throws Exception;
+	public MGKPerson addPerson(MGKPerson mgkPerson) throws Exception;
 
-	public HttpInvoker.HttpResponse addPersonHttpResponse(Person person)
+	public HttpInvoker.HttpResponse addPersonHttpResponse(MGKPerson mgkPerson)
 		throws Exception;
 
-	public Person updatePerson(Person person) throws Exception;
+	public MGKPerson updatePerson(MGKPerson mgkPerson) throws Exception;
 
-	public HttpInvoker.HttpResponse updatePersonHttpResponse(Person person)
+	public HttpInvoker.HttpResponse updatePersonHttpResponse(
+			MGKPerson mgkPerson)
 		throws Exception;
 
 	public static class Builder {
@@ -52,8 +54,8 @@ public interface PersonResource {
 			return this;
 		}
 
-		public PersonResource build() {
-			return new PersonResourceImpl(this);
+		public MGKPersonResource build() {
+			return new MGKPersonResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -82,72 +84,39 @@ public interface PersonResource {
 			return this;
 		}
 
-		public Builder parameters(String... parameters) {
-			if ((parameters.length % 2) != 0) {
-				throw new IllegalArgumentException(
-					"Parameters length is not an even number");
-			}
-
-			for (int i = 0; i < parameters.length; i += 2) {
-				String parameterName = String.valueOf(parameters[i]);
-				String parameterValue = String.valueOf(parameters[i + 1]);
-
-				_parameters.put(parameterName, parameterValue);
-			}
-
-			return this;
-		}
-
 		private Builder() {
 		}
 
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
 		private Locale _locale;
-		private String _login = "";
-		private String _password = "";
+		private String _login = "test@liferay.com";
+		private String _password = "test";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
 
 	}
 
-	public static class PersonResourceImpl implements PersonResource {
+	public static class MGKPersonResourceImpl implements MGKPersonResource {
 
-		public Page<Person> getPersonsPage(
-				Integer personId, Pagination pagination)
+		public Page<MGKPerson> getPersonsPage(
+				Long siteId, Integer personId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getPersonsPageHttpResponse(
-				personId, pagination);
+				siteId, personId, pagination);
 
 			String content = httpResponse.getContent();
 
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
+			_logger.fine("HTTP response content: " + content);
 
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return Page.of(content, PersonSerDes::toDTO);
+				return Page.of(content, MGKPersonSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -159,7 +128,7 @@ public interface PersonResource {
 		}
 
 		public HttpInvoker.HttpResponse getPersonsPageHttpResponse(
-				Integer personId, Pagination pagination)
+				Long siteId, Integer personId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -196,7 +165,9 @@ public interface PersonResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/MgkPortlet-rest/v1.0/persons");
+					_builder._port +
+						"/o/MgkPortlet-rest/v1.0/sites/{siteId}/persons",
+				siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -204,37 +175,20 @@ public interface PersonResource {
 			return httpInvoker.invoke();
 		}
 
-		public Person addPerson(Person person) throws Exception {
+		public MGKPerson addPerson(MGKPerson mgkPerson) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = addPersonHttpResponse(
-				person);
+				mgkPerson);
 
 			String content = httpResponse.getContent();
 
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
+			_logger.fine("HTTP response content: " + content);
 
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return PersonSerDes.toDTO(content);
+				return MGKPersonSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -245,12 +199,13 @@ public interface PersonResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse addPersonHttpResponse(Person person)
+		public HttpInvoker.HttpResponse addPersonHttpResponse(
+				MGKPerson mgkPerson)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(person.toString(), "application/json");
+			httpInvoker.body(mgkPerson.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -273,7 +228,8 @@ public interface PersonResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/MgkPortlet-rest/v1.0/persons");
+					_builder._port +
+						"/o/MgkPortlet-rest/v1.0/sites/{siteId}/persons");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -281,37 +237,20 @@ public interface PersonResource {
 			return httpInvoker.invoke();
 		}
 
-		public Person updatePerson(Person person) throws Exception {
+		public MGKPerson updatePerson(MGKPerson mgkPerson) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = updatePersonHttpResponse(
-				person);
+				mgkPerson);
 
 			String content = httpResponse.getContent();
 
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
+			_logger.fine("HTTP response content: " + content);
 
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return PersonSerDes.toDTO(content);
+				return MGKPersonSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -322,12 +261,13 @@ public interface PersonResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse updatePersonHttpResponse(Person person)
+		public HttpInvoker.HttpResponse updatePersonHttpResponse(
+				MGKPerson mgkPerson)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(person.toString(), "application/json");
+			httpInvoker.body(mgkPerson.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -350,7 +290,8 @@ public interface PersonResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/MgkPortlet-rest/v1.0/persons");
+					_builder._port +
+						"/o/MgkPortlet-rest/v1.0/sites/{siteId}/persons");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -358,12 +299,12 @@ public interface PersonResource {
 			return httpInvoker.invoke();
 		}
 
-		private PersonResourceImpl(Builder builder) {
+		private MGKPersonResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			PersonResource.class.getName());
+			MGKPersonResource.class.getName());
 
 		private Builder _builder;
 

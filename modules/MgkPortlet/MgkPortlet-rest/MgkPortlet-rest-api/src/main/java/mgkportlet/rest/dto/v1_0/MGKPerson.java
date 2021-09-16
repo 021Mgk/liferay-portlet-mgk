@@ -12,8 +12,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.io.Serializable;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -28,15 +26,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "A person that is a member of the portal.", value = "Person"
-)
+@GraphQLName("MGKPerson")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Person")
-public class Person implements Serializable {
+@XmlRootElement(name = "MGKPerson")
+public class MGKPerson {
 
-	public static Person toDTO(String json) {
-		return ObjectMapperUtil.readValue(Person.class, json);
+	public static MGKPerson toDTO(String json) {
+		return ObjectMapperUtil.readValue(MGKPerson.class, json);
 	}
 
 	@Schema
@@ -155,13 +151,13 @@ public class Person implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Person)) {
+		if (!(object instanceof MGKPerson)) {
 			return false;
 		}
 
-		Person person = (Person)object;
+		MGKPerson mgkPerson = (MGKPerson)object;
 
-		return Objects.equals(toString(), person.toString());
+		return Objects.equals(toString(), mgkPerson.toString());
 	}
 
 	@Override
@@ -234,8 +230,8 @@ public class Person implements Serializable {
 	}
 
 	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "mgkportlet.rest.dto.v1_0.Person", name = "x-class-name"
+		defaultValue = "mgkportlet.rest.dto.v1_0.MGKPerson",
+		name = "x-class-name"
 	)
 	public String xClassName;
 
@@ -243,16 +239,6 @@ public class Person implements Serializable {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
-	}
-
-	private static boolean _isArray(Object value) {
-		if (value == null) {
-			return false;
-		}
-
-		Class<?> clazz = value.getClass();
-
-		return clazz.isArray();
 	}
 
 	private static String _toJSON(Map<String, ?> map) {
@@ -269,11 +255,13 @@ public class Person implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\": ");
+			sb.append("\":");
 
 			Object value = entry.getValue();
 
-			if (_isArray(value)) {
+			Class<?> clazz = value.getClass();
+
+			if (clazz.isArray()) {
 				sb.append("[");
 
 				Object[] valueArray = (Object[])value;
@@ -308,7 +296,7 @@ public class Person implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(", ");
+				sb.append(",");
 			}
 		}
 

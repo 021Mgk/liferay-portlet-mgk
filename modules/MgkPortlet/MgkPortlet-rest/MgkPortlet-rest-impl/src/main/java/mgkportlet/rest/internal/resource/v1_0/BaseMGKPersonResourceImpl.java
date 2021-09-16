@@ -4,7 +4,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -39,11 +38,14 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -51,8 +53,8 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
-import mgkportlet.rest.dto.v1_0.Person;
-import mgkportlet.rest.resource.v1_0.PersonResource;
+import mgkportlet.rest.dto.v1_0.MGKPerson;
+import mgkportlet.rest.resource.v1_0.MGKPersonResource;
 
 /**
  * @author USER
@@ -60,29 +62,31 @@ import mgkportlet.rest.resource.v1_0.PersonResource;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BasePersonResourceImpl
-	implements EntityModelResource, PersonResource,
-			   VulcanBatchEngineTaskItemDelegate<Person> {
+public abstract class BaseMGKPersonResourceImpl
+	implements MGKPersonResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<MGKPerson> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/MgkPortlet-rest/v1.0/persons'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/MgkPortlet-rest/v1.0/sites/{siteId}/persons'  -u 'test@liferay.com:test'
 	 */
+	@Override
 	@GET
 	@Operation(description = "Retrieves the persons. Results can be paginated.")
-	@Override
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
 			@Parameter(in = ParameterIn.QUERY, name = "personId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/persons")
+	@Path("/sites/{siteId}/persons")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Person")})
-	public Page<Person> getPersonsPage(
+	@Tags(value = {@Tag(name = "MGKPerson")})
+	public Page<MGKPerson> getPersonsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("personId") Integer personId,
 			@Context Pagination pagination)
 		throws Exception {
@@ -93,46 +97,46 @@ public abstract class BasePersonResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/MgkPortlet-rest/v1.0/persons' -d $'{"email": ___, "firstName": ___, "lastName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/MgkPortlet-rest/v1.0/sites/{siteId}/persons' -d $'{"email": ___, "firstName": ___, "lastName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new person")
-	@Override
-	@Path("/persons")
 	@POST
+	@Path("/sites/{siteId}/persons")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Person")})
-	public Person addPerson(Person person) throws Exception {
-		return new Person();
+	@Tags(value = {@Tag(name = "MGKPerson")})
+	public MGKPerson addPerson(MGKPerson mgkPerson) throws Exception {
+		return new MGKPerson();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/MgkPortlet-rest/v1.0/persons' -d $'{"email": ___, "firstName": ___, "lastName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/MgkPortlet-rest/v1.0/sites/{siteId}/persons' -d $'{"email": ___, "firstName": ___, "lastName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Update person")
-	@Override
-	@Path("/persons")
-	@Produces({"application/json", "application/xml"})
 	@PUT
-	@Tags(value = {@Tag(name = "Person")})
-	public Person updatePerson(Person person) throws Exception {
-		return new Person();
+	@Path("/sites/{siteId}/persons")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "MGKPerson")})
+	public MGKPerson updatePerson(MGKPerson mgkPerson) throws Exception {
+		return new MGKPerson();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<Person> persons,
+			java.util.Collection<MGKPerson> mgkPersons,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<Person> persons,
+			java.util.Collection<MGKPerson> mgkPersons,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -153,12 +157,12 @@ public abstract class BasePersonResourceImpl
 	}
 
 	@Override
-	public Page<Person> read(
+	public Page<MGKPerson> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getPersonsPage((Integer)parameters.get("personId"), pagination);
+		return null;
 	}
 
 	@Override
@@ -185,7 +189,7 @@ public abstract class BasePersonResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<Person> persons,
+			java.util.Collection<MGKPerson> mgkPersons,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -222,14 +226,6 @@ public abstract class BasePersonResourceImpl
 		this.contextUser = contextUser;
 	}
 
-	public void setGroupLocalService(GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	public void setRoleLocalService(RoleLocalService roleLocalService) {
-		this.roleLocalService = roleLocalService;
-	}
-
 	protected Map<String, String> addAction(
 		String actionName, GroupedModel groupedModel, String methodName) {
 
@@ -245,15 +241,6 @@ public abstract class BasePersonResourceImpl
 		return ActionUtil.addAction(
 			actionName, getClass(), id, methodName, contextScopeChecker,
 			ownerId, permissionName, siteId, contextUriInfo);
-	}
-
-	protected Map<String, String> addAction(
-		String actionName, Long id, String methodName,
-		ModelResourcePermission modelResourcePermission) {
-
-		return ActionUtil.addAction(
-			actionName, getClass(), id, methodName, contextScopeChecker,
-			modelResourcePermission, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(

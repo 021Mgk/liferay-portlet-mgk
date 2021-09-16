@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
 
-import mgkportlet.rest.resource.v1_0.PersonResource;
+import mgkportlet.rest.resource.v1_0.MGKPersonResource;
 
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
@@ -37,30 +37,30 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author USER
  * @generated
  */
-@Component(immediate = true, service = PersonResource.Factory.class)
+@Component(immediate = true, service = MGKPersonResource.Factory.class)
 @Generated("")
-public class PersonResourceFactoryImpl implements PersonResource.Factory {
+public class MGKPersonResourceFactoryImpl implements MGKPersonResource.Factory {
 
 	@Override
-	public PersonResource.Builder create() {
-		return new PersonResource.Builder() {
+	public MGKPersonResource.Builder create() {
+		return new MGKPersonResource.Builder() {
 
 			@Override
-			public PersonResource build() {
+			public MGKPersonResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (PersonResource)ProxyUtil.newProxyInstance(
-					PersonResource.class.getClassLoader(),
-					new Class<?>[] {PersonResource.class},
+				return (MGKPersonResource)ProxyUtil.newProxyInstance(
+					MGKPersonResource.class.getClassLoader(),
+					new Class<?>[] {MGKPersonResource.class},
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _preferredLocale, _user));
 			}
 
 			@Override
-			public PersonResource.Builder checkPermissions(
+			public MGKPersonResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -69,7 +69,7 @@ public class PersonResourceFactoryImpl implements PersonResource.Factory {
 			}
 
 			@Override
-			public PersonResource.Builder httpServletRequest(
+			public MGKPersonResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -78,7 +78,7 @@ public class PersonResourceFactoryImpl implements PersonResource.Factory {
 			}
 
 			@Override
-			public PersonResource.Builder preferredLocale(
+			public MGKPersonResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -87,7 +87,7 @@ public class PersonResourceFactoryImpl implements PersonResource.Factory {
 			}
 
 			@Override
-			public PersonResource.Builder user(User user) {
+			public MGKPersonResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -103,12 +103,12 @@ public class PersonResourceFactoryImpl implements PersonResource.Factory {
 
 	@Activate
 	protected void activate() {
-		PersonResource.FactoryHolder.factory = this;
+		MGKPersonResource.FactoryHolder.factory = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		PersonResource.FactoryHolder.factory = null;
+		MGKPersonResource.FactoryHolder.factory = null;
 	}
 
 	private Object _invoke(
@@ -133,26 +133,27 @@ public class PersonResourceFactoryImpl implements PersonResource.Factory {
 				_liberalPermissionCheckerFactory.create(user));
 		}
 
-		PersonResource personResource = _componentServiceObjects.getService();
+		MGKPersonResource mgkPersonResource =
+			_componentServiceObjects.getService();
 
-		personResource.setContextAcceptLanguage(
+		mgkPersonResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		personResource.setContextCompany(company);
+		mgkPersonResource.setContextCompany(company);
 
-		personResource.setContextHttpServletRequest(httpServletRequest);
-		personResource.setContextUser(user);
+		mgkPersonResource.setContextHttpServletRequest(httpServletRequest);
+		mgkPersonResource.setContextUser(user);
 
 		try {
-			return method.invoke(personResource, arguments);
+			return method.invoke(mgkPersonResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(personResource);
+			_componentServiceObjects.ungetService(mgkPersonResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -164,7 +165,7 @@ public class PersonResourceFactoryImpl implements PersonResource.Factory {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<PersonResource> _componentServiceObjects;
+	private ComponentServiceObjects<MGKPersonResource> _componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;

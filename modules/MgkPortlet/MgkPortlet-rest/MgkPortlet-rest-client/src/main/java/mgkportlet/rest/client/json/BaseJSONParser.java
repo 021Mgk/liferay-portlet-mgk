@@ -281,22 +281,6 @@ public abstract class BaseJSONParser<T> {
 		_lastChar = 0;
 	}
 
-	private boolean _isCharEscaped(String string, int index) {
-		int backslashCount = 0;
-
-		while (((index - 1 - backslashCount) >= 0) &&
-			   (string.charAt(index - 1 - backslashCount) == '\\')) {
-
-			backslashCount++;
-		}
-
-		if ((backslashCount % 2) == 0) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private boolean _isEmpty() {
 		String substring = _json.substring(1, _json.length() - 1);
 
@@ -379,7 +363,7 @@ public abstract class BaseJSONParser<T> {
 		else if (_lastChar == '"') {
 			return _readValueAsString();
 		}
-		else if (parseMaps && (_lastChar == '{')) {
+		else if (parseMaps && _lastChar == '{') {
 			try {
 				Class<? extends BaseJSONParser> clazz = getClass();
 
@@ -504,7 +488,7 @@ public abstract class BaseJSONParser<T> {
 
 		_setCaptureStart();
 
-		while ((_lastChar != '"') || _isCharEscaped(_json, _index - 1)) {
+		while ((_lastChar != '"') || (_json.charAt(_index - 2) == '\\')) {
 			_readNextChar();
 		}
 
@@ -588,25 +572,8 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	private String _unescape(String string) {
-		for (int i = JSON_ESCAPE_STRINGS.length - 1; i >= 0; i--) {
-			String[] escapeStrings = JSON_ESCAPE_STRINGS[i];
-
-			int index = string.indexOf(escapeStrings[1]);
-
-			while (index != -1) {
-				if (!_isCharEscaped(string, index)) {
-					string =
-						string.substring(0, index) + escapeStrings[0] +
-							string.substring(index + escapeStrings[1].length());
-
-					index = string.indexOf(
-						escapeStrings[1], index + escapeStrings[0].length());
-				}
-				else {
-					index = string.indexOf(
-						escapeStrings[1], index + escapeStrings[1].length());
-				}
-			}
+		for (String[] strings : JSON_ESCAPE_STRINGS) {
+			string = string.replace(strings[1], strings[0]);
 		}
 
 		return string;
