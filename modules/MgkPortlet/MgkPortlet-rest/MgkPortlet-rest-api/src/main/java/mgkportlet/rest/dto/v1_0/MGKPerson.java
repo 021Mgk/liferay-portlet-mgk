@@ -26,13 +26,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Person")
+@GraphQLName("MGKPerson")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Person")
-public class Person {
+@XmlRootElement(name = "MGKPerson")
+public class MGKPerson {
 
-	public static Person toDTO(String json) {
-		return ObjectMapperUtil.readValue(Person.class, json);
+	public static MGKPerson toDTO(String json) {
+		return ObjectMapperUtil.readValue(MGKPerson.class, json);
 	}
 
 	@Schema
@@ -151,13 +151,13 @@ public class Person {
 			return true;
 		}
 
-		if (!(object instanceof Person)) {
+		if (!(object instanceof MGKPerson)) {
 			return false;
 		}
 
-		Person person = (Person)object;
+		MGKPerson mgkPerson = (MGKPerson)object;
 
-		return Objects.equals(toString(), person.toString());
+		return Objects.equals(toString(), mgkPerson.toString());
 	}
 
 	@Override
@@ -230,7 +230,8 @@ public class Person {
 	}
 
 	@Schema(
-		defaultValue = "mgkportlet.rest.dto.v1_0.Person", name = "x-class-name"
+		defaultValue = "mgkportlet.rest.dto.v1_0.MGKPerson",
+		name = "x-class-name"
 	)
 	public String xClassName;
 

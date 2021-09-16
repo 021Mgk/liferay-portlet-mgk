@@ -18,10 +18,12 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.UriInfo;
 
-import mgkportlet.rest.dto.v1_0.Person;
-import mgkportlet.rest.resource.v1_0.PersonResource;
+import mgkportlet.rest.dto.v1_0.MGKPerson;
+import mgkportlet.rest.resource.v1_0.MGKPersonResource;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -32,53 +34,55 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
-	public static void setPersonResourceComponentServiceObjects(
-		ComponentServiceObjects<PersonResource>
-			personResourceComponentServiceObjects) {
+	public static void setMGKPersonResourceComponentServiceObjects(
+		ComponentServiceObjects<MGKPersonResource>
+			mgkPersonResourceComponentServiceObjects) {
 
-		_personResourceComponentServiceObjects =
-			personResourceComponentServiceObjects;
+		_mgkPersonResourceComponentServiceObjects =
+			mgkPersonResourceComponentServiceObjects;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {persons(page: ___, pageSize: ___, personId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {persons(page: ___, pageSize: ___, personId: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the persons. Results can be paginated."
 	)
-	public PersonPage persons(
+	public MGKPersonPage persons(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("personId") Integer personId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_personResourceComponentServiceObjects,
+			_mgkPersonResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			personResource -> new PersonPage(
-				personResource.getPersonsPage(
-					personId, Pagination.of(page, pageSize))));
+			mgkPersonResource -> new MGKPersonPage(
+				mgkPersonResource.getPersonsPage(
+					Long.valueOf(siteKey), personId,
+					Pagination.of(page, pageSize))));
 	}
 
-	@GraphQLName("PersonPage")
-	public class PersonPage {
+	@GraphQLName("MGKPersonPage")
+	public class MGKPersonPage {
 
-		public PersonPage(Page personPage) {
-			actions = personPage.getActions();
-			items = personPage.getItems();
-			lastPage = personPage.getLastPage();
-			page = personPage.getPage();
-			pageSize = personPage.getPageSize();
-			totalCount = personPage.getTotalCount();
+		public MGKPersonPage(Page mgkPersonPage) {
+			actions = mgkPersonPage.getActions();
+			items = mgkPersonPage.getItems();
+			lastPage = mgkPersonPage.getLastPage();
+			page = mgkPersonPage.getPage();
+			pageSize = mgkPersonPage.getPageSize();
+			totalCount = mgkPersonPage.getTotalCount();
 		}
 
 		@GraphQLField
 		protected Map<String, Map> actions;
 
 		@GraphQLField
-		protected java.util.Collection<Person> items;
+		protected java.util.Collection<MGKPerson> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -113,19 +117,19 @@ public class Query {
 		}
 	}
 
-	private void _populateResourceContext(PersonResource personResource)
+	private void _populateResourceContext(MGKPersonResource mgkPersonResource)
 		throws Exception {
 
-		personResource.setContextAcceptLanguage(_acceptLanguage);
-		personResource.setContextCompany(_company);
-		personResource.setContextHttpServletRequest(_httpServletRequest);
-		personResource.setContextHttpServletResponse(_httpServletResponse);
-		personResource.setContextUriInfo(_uriInfo);
-		personResource.setContextUser(_user);
+		mgkPersonResource.setContextAcceptLanguage(_acceptLanguage);
+		mgkPersonResource.setContextCompany(_company);
+		mgkPersonResource.setContextHttpServletRequest(_httpServletRequest);
+		mgkPersonResource.setContextHttpServletResponse(_httpServletResponse);
+		mgkPersonResource.setContextUriInfo(_uriInfo);
+		mgkPersonResource.setContextUser(_user);
 	}
 
-	private static ComponentServiceObjects<PersonResource>
-		_personResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MGKPersonResource>
+		_mgkPersonResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;

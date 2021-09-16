@@ -5,17 +5,17 @@ import java.util.Objects;
 import javax.annotation.Generated;
 
 import mgkportlet.rest.client.function.UnsafeSupplier;
-import mgkportlet.rest.client.serdes.v1_0.PersonSerDes;
+import mgkportlet.rest.client.serdes.v1_0.MGKPersonSerDes;
 
 /**
  * @author USER
  * @generated
  */
 @Generated("")
-public class Person implements Cloneable {
+public class MGKPerson implements Cloneable {
 
-	public static Person toDTO(String json) {
-		return PersonSerDes.toDTO(json);
+	public static MGKPerson toDTO(String json) {
+		return MGKPersonSerDes.toDTO(json);
 	}
 
 	public String getEmail() {
@@ -101,8 +101,8 @@ public class Person implements Cloneable {
 	protected String lastName;
 
 	@Override
-	public Person clone() throws CloneNotSupportedException {
-		return (Person)super.clone();
+	public MGKPerson clone() throws CloneNotSupportedException {
+		return (MGKPerson)super.clone();
 	}
 
 	@Override
@@ -111,13 +111,13 @@ public class Person implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof Person)) {
+		if (!(object instanceof MGKPerson)) {
 			return false;
 		}
 
-		Person person = (Person)object;
+		MGKPerson mgkPerson = (MGKPerson)object;
 
-		return Objects.equals(toString(), person.toString());
+		return Objects.equals(toString(), mgkPerson.toString());
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class Person implements Cloneable {
 	}
 
 	public String toString() {
-		return PersonSerDes.toJSON(this);
+		return MGKPersonSerDes.toJSON(this);
 	}
 
 }

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.core.UriInfo;
 
-import mgkportlet.rest.dto.v1_0.Person;
+import mgkportlet.rest.dto.v1_0.MGKPerson;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -27,18 +27,19 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface PersonResource {
+public interface MGKPersonResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Person> getPersonsPage(Integer personId, Pagination pagination)
+	public Page<MGKPerson> getPersonsPage(
+			Long siteId, Integer personId, Pagination pagination)
 		throws Exception;
 
-	public Person addPerson(Person person) throws Exception;
+	public MGKPerson addPerson(MGKPerson mgkPerson) throws Exception;
 
-	public Person updatePerson(Person person) throws Exception;
+	public MGKPerson updatePerson(MGKPerson mgkPerson) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -70,7 +71,7 @@ public interface PersonResource {
 	@ProviderType
 	public interface Builder {
 
-		public PersonResource build();
+		public MGKPersonResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

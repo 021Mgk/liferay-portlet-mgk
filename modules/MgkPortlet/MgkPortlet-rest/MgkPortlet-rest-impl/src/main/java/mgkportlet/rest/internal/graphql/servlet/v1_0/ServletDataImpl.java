@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 
 import mgkportlet.rest.internal.graphql.mutation.v1_0.Mutation;
 import mgkportlet.rest.internal.graphql.query.v1_0.Query;
-import mgkportlet.rest.resource.v1_0.PersonResource;
+import mgkportlet.rest.resource.v1_0.MGKPersonResource;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentServiceObjects;
@@ -25,11 +25,11 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Mutation.setPersonResourceComponentServiceObjects(
-			_personResourceComponentServiceObjects);
+		Mutation.setMGKPersonResourceComponentServiceObjects(
+			_mgkPersonResourceComponentServiceObjects);
 
-		Query.setPersonResourceComponentServiceObjects(
-			_personResourceComponentServiceObjects);
+		Query.setMGKPersonResourceComponentServiceObjects(
+			_mgkPersonResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<PersonResource>
-		_personResourceComponentServiceObjects;
+	private ComponentServiceObjects<MGKPersonResource>
+		_mgkPersonResourceComponentServiceObjects;
 
 }
