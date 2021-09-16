@@ -1,7 +1,5 @@
 package mgkportlet.rest.client.dto.v1_0;
 
-import java.io.Serializable;
-
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -14,7 +12,7 @@ import mgkportlet.rest.client.serdes.v1_0.PersonSerDes;
  * @generated
  */
 @Generated("")
-public class Person implements Cloneable, Serializable {
+public class Person implements Cloneable {
 
 	public static Person toDTO(String json) {
 		return PersonSerDes.toDTO(json);

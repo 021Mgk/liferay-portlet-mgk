@@ -88,7 +88,6 @@ paths:
                     description:
                         "Person successfully added"
             tags: ["Person"]
-
         put:
             description: Update person
             operationId: updatePerson

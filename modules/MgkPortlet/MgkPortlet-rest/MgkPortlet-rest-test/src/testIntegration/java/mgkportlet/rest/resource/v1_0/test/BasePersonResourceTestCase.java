@@ -95,9 +95,7 @@ public abstract class BasePersonResourceTestCase {
 
 		PersonResource.Builder builder = PersonResource.builder();
 
-		personResource = builder.authentication(
-			"test@liferay.com", "test"
-		).locale(
+		personResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -362,7 +360,7 @@ public abstract class BasePersonResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Person person) throws Exception {
+	protected void assertValid(Person person) {
 		boolean valid = true;
 
 		if (person.getId() == null) {
@@ -550,11 +548,9 @@ public abstract class BasePersonResourceTestCase {
 					return false;
 				}
 			}
-
-			return true;
 		}
 
-		return false;
+		return true;
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -746,12 +742,12 @@ public abstract class BasePersonResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(": ");
+					sb.append(":");
 					sb.append(entry.getValue());
-					sb.append(", ");
+					sb.append(",");
 				}
 
-				sb.setLength(sb.length() - 2);
+				sb.setLength(sb.length() - 1);
 
 				sb.append(")");
 			}
@@ -761,10 +757,10 @@ public abstract class BasePersonResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(", ");
+					sb.append(",");
 				}
 
-				sb.setLength(sb.length() - 2);
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}
